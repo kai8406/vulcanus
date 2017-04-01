@@ -83,4 +83,8 @@
 		</repository>
 	</repositories>
 
+	<modules>
+		<module>api-gateway</module>
+	</modules>
+
 </project>
