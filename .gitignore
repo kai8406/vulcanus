@@ -61,3 +61,15 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+
+
+# Eclipse project files
+.classpath
+.project
+.settings
+.springBeans
+.externalToolBuilders
+.gitattributes
+.svn
+.mymetadata
+.properties
