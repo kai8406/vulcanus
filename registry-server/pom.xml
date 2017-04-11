@@ -14,7 +14,6 @@
 	<packaging>jar</packaging>
 	<name>Registry Server</name>
 
-
 	<dependencies>
 
 		<dependency>
