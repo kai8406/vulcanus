@@ -88,6 +88,7 @@
 		<module>auth-server</module>
 		<module>config-server</module>
 		<module>registry-server</module>
+		<module>monitor-dashboard</module>
 	</modules>
 
 </project>
