@@ -85,6 +85,7 @@
 
 	<modules>
 		<module>api-gateway</module>
+		<module>auth-server</module>
 		<module>config-server</module>
 		<module>registry-server</module>
 	</modules>
