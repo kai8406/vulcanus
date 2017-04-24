@@ -96,6 +96,7 @@
 		<module>config-server</module>
 		<module>registry-server</module>
 		<module>monitor-dashboard</module>
+		<module>vpc-module</module>
 	</modules>
 
 </project>
