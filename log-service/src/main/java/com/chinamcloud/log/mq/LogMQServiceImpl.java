@@ -1,4 +1,4 @@
-package com.chinamcloud.vmware.mq;
+package com.chinamcloud.log.mq;
 
 import java.io.UnsupportedEncodingException;
 
@@ -6,7 +6,7 @@ import org.springframework.amqp.core.Message;
 import org.springframework.stereotype.Component;
 
 @Component
-public class VPCMQServiceImpl implements VPCMQService {
+public class LogMQServiceImpl implements LogMQService {
 
 	/**
 	 * 将Message转换成UTF-8字符串.
@@ -21,15 +21,14 @@ public class VPCMQServiceImpl implements VPCMQService {
 	}
 
 	@Override
-	public void createVPC(Message message) {
+	public void saveLog(Message message) {
 
 		// 对json字符串进行UTF-8转码
 		String receiveString = EncodeMessage(message);
 
-		System.err.println("*************************");
+		System.err.println("**********日志打印***************");
 		System.err.println(receiveString);
 		System.err.println("*************************");
-
 	}
 
 }

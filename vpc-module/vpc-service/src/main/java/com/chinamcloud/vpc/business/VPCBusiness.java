@@ -33,6 +33,7 @@ public class VPCBusiness {
 		vo.setUuid("461D0C42-D5D1-4009-9B6A-B3D5888A19A9");
 		vo.setVpcName("默认VPC");
 		vo.setVpcCode("vpc-code");
+		
 
 		template.convertAndSend(topic.getName(), "cmop.vpc.create", binder.toJson(vo));
 
