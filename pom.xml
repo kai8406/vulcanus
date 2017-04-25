@@ -101,7 +101,8 @@
 		<module>registry-server</module>
 		<module>monitor-dashboard</module>
 		<module>vpc-module</module>
-		<module>task</module>
+		<module>task-service</module>
+		<module>log-service</module>
 	</modules>
 
 </project>
