@@ -10,11 +10,12 @@ public class TaskBusiness {
 
 	protected static JsonMapper binder = JsonMapper.nonEmptyMapper();
 
-	public TaskDTO saveTask() {
+	public TaskDTO saveTask(String vpcCode) {
 
 		TaskDTO dto = new TaskDTO();
 		dto.setId(1L);
 		dto.setCode("task-code");
+		dto.setResourceCode(vpcCode);
 
 		// 拓扑图关系持久化
 		return dto;
@@ -25,6 +26,7 @@ public class TaskBusiness {
 		TaskDTO dto = new TaskDTO();
 		dto.setId(1L);
 		dto.setCode(code);
+		dto.setResourceCode("resoucesCode");
 
 		// 拓扑图关系持久化
 		return dto;

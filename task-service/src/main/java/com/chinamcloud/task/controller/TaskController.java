@@ -24,7 +24,7 @@ public class TaskController {
 
 	@RequestMapping(value = "/", method = RequestMethod.POST)
 	public TaskDTO saveTask(@RequestParam(value = "vpcCode") String vpcCode) {
-		return business.saveTask();
+		return business.saveTask(vpcCode);
 	}
 
 }

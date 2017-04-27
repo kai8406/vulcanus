@@ -1,4 +1,4 @@
-package com.chinamcloud.task.domain;
+package com.chinamcloud.vpc.domain;
 
 public class TaskDTO {
 
@@ -30,5 +30,4 @@ public class TaskDTO {
 	public void setId(Long id) {
 		this.id = id;
 	}
-
 }
