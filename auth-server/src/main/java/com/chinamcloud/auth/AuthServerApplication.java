@@ -1,18 +1,11 @@
 package com.chinamcloud.auth;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.SpringApplication;
 import org.springframework.cloud.client.SpringCloudApplication;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
@@ -33,30 +26,30 @@ public class AuthServerApplication {
 		SpringApplication.run(AuthServerApplication.class, args);
 	}
 
-	@Configuration
-	@EnableWebSecurity
-	protected static class webSecurityConfig extends WebSecurityConfigurerAdapter {
-
-		@Autowired
-		private AuthUserDetailsService userDetailsService;
-
-		@Override
-		protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-			auth.userDetailsService(userDetailsService).passwordEncoder(new BCryptPasswordEncoder());
-		}
-
-		@Bean
-		@Override
-		public AuthenticationManager authenticationManagerBean() throws Exception {
-			return super.authenticationManagerBean();
-		}
-
-		@Override
-		protected void configure(HttpSecurity http) throws Exception {
-			http.authorizeRequests().anyRequest().authenticated().and().csrf().disable();
-		}
-
-	}
+	// https://my.oschina.net/pingjiangyetan/blog/423474
+	// @Configuration
+	// @EnableWebSecurity
+	// protected static class webSecurityConfig extends WebSecurityConfigurerAdapter {
+	//
+	// @Autowired
+	// private AuthUserDetailsService userDetailsService;
+	//
+	// @Override
+	// protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+	// auth.userDetailsService(userDetailsService).passwordEncoder(new BCryptPasswordEncoder());
+	// }
+	//
+	// @Bean
+	// @Override
+	// public AuthenticationManager authenticationManagerBean() throws Exception {
+	// return super.authenticationManagerBean();
+	// }
+	//
+	// @Override
+	// protected void configure(HttpSecurity http) throws Exception {
+	// http.authorizeRequests().anyRequest().authenticated().and().csrf().disable();
+	// }
+	// }
 
 	/**
 	 * 
@@ -72,7 +65,7 @@ public class AuthServerApplication {
 		private TokenStore tokenStore = new InMemoryTokenStore();
 
 		@Autowired
-		@Qualifier("authenticationManagerBean")
+		// @Qualifier("authenticationManagerBean")
 		private AuthenticationManager authenticationManager;
 
 		@Autowired
@@ -82,7 +75,8 @@ public class AuthServerApplication {
 		public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
 
 			// 在令牌端点上定义了安全约束
-			security.tokenKeyAccess("permitAll()").checkTokenAccess("isAuthenticated()");
+			// security.tokenKeyAccess("permitAll()").checkTokenAccess("isAuthenticated()");
+			security.allowFormAuthenticationForClients();
 		}
 
 		/**
@@ -105,7 +99,7 @@ public class AuthServerApplication {
 			// 定义了客户端细节服务,客户详细信息可以被初始化.
 			clients.inMemory().withClient("browser").authorizedGrantTypes("refresh_token", "password").scopes("ui")
 					.and().withClient("account-service").secret("account-service")
-					.authorizedGrantTypes("client_credentials", "refresh_token").scopes("server");
+					.authorizedGrantTypes("client_credentials", "password", "refresh_token").scopes("server");
 		}
 
 		@Override
