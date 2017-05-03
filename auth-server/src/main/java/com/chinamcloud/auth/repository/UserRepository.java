@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import com.chinamcloud.auth.domain.User;
 
 @Repository
-public interface UserRepository extends CrudRepository<User, Long>, JpaSpecificationExecutor<User> {
+public interface UserRepository extends CrudRepository<User, String>, JpaSpecificationExecutor<User> {
 
 	public User findByUsername(String username);
 

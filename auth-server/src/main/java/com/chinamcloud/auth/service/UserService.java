@@ -6,4 +6,6 @@ public interface UserService {
 	
 	void create(User user);
 	
+	User find(String username);
+	
 }

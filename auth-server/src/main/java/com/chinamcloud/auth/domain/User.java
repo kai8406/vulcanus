@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.GenericGenerator;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -21,8 +22,13 @@ public class User implements UserDetails {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue
-	private Long id;
+	@GenericGenerator(name = "system-uuid", strategy = "uuid")
+	@GeneratedValue(generator = "system-uuid")
+	private String id;
+
+	// @GenericGenerator(name = “system-uuid”, strategy = “uuid”) 声明一个策略通用生成器，name为”system-uuid”,策略strategy为”uuid”。
+	//
+	// @GeneratedValue(generator = “system-uuid”) 用generator属性指定要使用的策略生成器。
 
 	@Column(name = "password")
 	private String password;
@@ -33,10 +39,6 @@ public class User implements UserDetails {
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		return null;
-	}
-
-	public Long getId() {
-		return id;
 	}
 
 	@Override
@@ -69,12 +71,16 @@ public class User implements UserDetails {
 		return true;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
-	}
-
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
 	}
 
 	public void setUsername(String username) {
