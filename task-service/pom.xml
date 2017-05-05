@@ -5,7 +5,7 @@
 
 	<parent>
 		<groupId>com.chinamcloud</groupId>
-		<artifactId>ceres</artifactId>
+		<artifactId>vulcanus</artifactId>
 		<version>1.0.0-SNAPSHOT</version>
 	</parent>
 

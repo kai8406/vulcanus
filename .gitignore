@@ -73,3 +73,5 @@ $RECYCLE.BIN/
 .svn
 .mymetadata
 .properties
+
+/target/
