@@ -75,3 +75,6 @@ $RECYCLE.BIN/
 .properties
 
 /target/
+*.properties
+vpc-module/vpc-vmware/target/classes/META-INF/maven/com.chinamcloud/vpc-vmware/pom.properties
+vpc-module/vpc-vmware/target/classes/META-INF/maven/com.chinamcloud/vpc-vmware/pom.properties

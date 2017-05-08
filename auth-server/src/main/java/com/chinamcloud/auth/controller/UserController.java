@@ -6,6 +6,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,18 +16,27 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.chinamcloud.auth.domain.User;
 import com.chinamcloud.auth.service.UserService;
+import com.chinamcloud.auth.utils.JsonMapper;
+import com.chinamcloud.auth.utils.UserPrincipal;
 
 @RestController
 @RequestMapping("/users")
 public class UserController {
+
+	private static JsonMapper binder = JsonMapper.nonEmptyMapper();
 
 	@Autowired
 	private UserService service;
 
 	@GetMapping("/current")
 	public Principal getUser(Principal principal) {
-		System.out.println(principal.getName());
 		return principal;
+	}
+
+	@GetMapping("/id")
+	public String getUserId(OAuth2Authentication auth) {
+		UserPrincipal userPrincipal = binder.fromJson(binder.toJson(auth.getPrincipal()), UserPrincipal.class);
+		return userPrincipal.getId();
 	}
 
 	@PreAuthorize("#oauth2.hasScope('server')")
