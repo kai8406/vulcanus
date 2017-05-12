@@ -7,7 +7,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.chinamcloud.vpc.VPCServiceApplication;
-import com.chinamcloud.vpc.domain.VPCVO;
+import com.chinamcloud.vpc.POJO.VpcDO;
 import com.chinamcloud.vpc.repository.db.VPCRepository;
 
 @RunWith(SpringRunner.class)
@@ -20,10 +20,10 @@ public class VpcServiceTest {
 	@Test
 	public void createVPC() {
 
-		VPCVO entity = new VPCVO();
+		VpcDO entity = new VpcDO();
 		entity.setDescription("description");
 		entity.setPlatformId("aws");
-		entity.setCidr("172.13.10.0/24");
+		entity.setCidrBlock("172.13.10.0/24");
 		entity.setRegionId("cn-beijing");
 		entity.setVpcName("vpcName");
 

@@ -1,4 +1,4 @@
-package com.chinamcloud.vpc.utils.exception;
+package com.chinamcloud.vpc.util.exception;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 

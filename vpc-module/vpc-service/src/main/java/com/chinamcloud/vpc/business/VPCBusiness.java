@@ -1,18 +1,20 @@
 package com.chinamcloud.vpc.business;
 
+import java.util.Date;
+
 import org.springframework.amqp.core.TopicExchange;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
+import com.chinamcloud.vpc.POJO.CreateVpcRequest;
+import com.chinamcloud.vpc.POJO.TaskDTO;
+import com.chinamcloud.vpc.POJO.VpcDO;
 import com.chinamcloud.vpc.client.TaskClient;
-import com.chinamcloud.vpc.domain.CreateVpcRequest;
-import com.chinamcloud.vpc.domain.TaskDTO;
-import com.chinamcloud.vpc.domain.VPCVO;
 import com.chinamcloud.vpc.service.db.VPCService;
-import com.chinamcloud.vpc.utils.mapper.BeanMapper;
-import com.chinamcloud.vpc.utils.mapper.JsonMapper;
+import com.chinamcloud.vpc.util.mapper.BeanMapper;
+import com.chinamcloud.vpc.util.mapper.JsonMapper;
 
 @Component
 public class VPCBusiness {
@@ -39,47 +41,54 @@ public class VPCBusiness {
 				.getBody();
 	}
 
-	public VPCVO saveVPC(CreateVpcRequest request) {
+	private static final String VPC_CREATE_ROUTINGKEY = "cmop.vpc.create";
+
+	public VpcDO saveVPC(CreateVpcRequest request) {
 
 		/**
+		 * 1.根据Token获得UserId
 		 * 
-		 * 1.数据库持久化,得到VPC Id
+		 * 2.持久化VpcDO
 		 * 
-		 * 2.根据Token获得UserId
+		 * 3.调用HTTP API创建TaskDTO
 		 * 
-		 * 3.创建一个Task对象
+		 * 4.将TaskId封装至VpcDO持久化
 		 * 
-		 * 4.将userId,TaskId,VPC参数封装成一个对象并传递至MQ队列里
+		 * 5.将VpcDO传递至MQ队列里
 		 * 
-		 * 5.开启一个MQ监听器,监听core ms的执行结果
 		 */
 
 		// Step.1
-		VPCVO vo = BeanMapper.map(request, VPCVO.class);
+		String userId = getUserId(request.getAccess_token());
 
 		// Step.2
-		// String userId = getUserId(request.getAccess_token());
+		VpcDO requestDO = BeanMapper.map(request, VpcDO.class);
+		requestDO.setCreateTime(new Date());
+		requestDO.setUserId(userId);
+
+		requestDO = service.saveAndFlush(requestDO);
 
 		// Step.3
 		TaskDTO taskDTO = new TaskDTO();
-		taskDTO.setAction("cmop.vpc.create");
-		taskDTO.setRequestData(vo.toString());
-		taskDTO.setState("执行中");
-		taskDTO.setResourceCode(vo.getId());
+		taskDTO.setStatus(TaskStatusEnum.执行中.toString());
+		taskDTO.setAction(VPC_CREATE_ROUTINGKEY);
+		taskDTO.setRequestData(requestDO.toString());
+		taskDTO.setResourceId(requestDO.getId());
 
-		// TaskDTO task = taskClient.saveTask(taskDTO);
+		TaskDTO saveTaskDTO = taskClient.saveTask(taskDTO);
 
 		// Step.4
-		// template.convertAndSend(topic.getName(), "cmop.vpc.create", binder.toJson(vo));
 
-		System.out.println("=======================");
-		System.out.println(vo);
-		VPCVO vpcvo = service.saveAndFlush(vo);
-		System.out.println(vpcvo);
-		return vpcvo;
+		requestDO.setTask_id(saveTaskDTO.getId());
+		requestDO = service.saveAndFlush(requestDO);
+
+		// Step.5
+		template.convertAndSend(topic.getName(), VPC_CREATE_ROUTINGKEY, binder.toJson(requestDO));
+
+		return requestDO;
 	}
 
-	public VPCVO getVPC() {
+	public VpcDO getVPC() {
 		return service.find("1");
 	}
 

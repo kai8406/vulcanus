@@ -1,4 +1,4 @@
-package com.chinamcloud.vpc.domain;
+package com.chinamcloud.vpc.POJO;
 
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
@@ -22,8 +22,6 @@ public class CreateVpcRequest {
 
 	@NotBlank
 	private String cidrBlock;
-
-	private String userCidr;
 
 	@Length(min = 2, max = 128)
 	private String vpcName;
