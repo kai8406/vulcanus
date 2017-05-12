@@ -1,4 +1,4 @@
-package com.chinamcloud.vpc.POJO;
+package com.chinamcloud.vpc.entity;
 
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;

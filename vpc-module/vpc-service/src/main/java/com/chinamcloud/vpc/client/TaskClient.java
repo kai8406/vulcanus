@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.chinamcloud.vpc.POJO.TaskDTO;
+import com.chinamcloud.vpc.entity.TaskDTO;
 
 @FeignClient("task-service")
 public interface TaskClient {

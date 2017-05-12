@@ -7,7 +7,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.chinamcloud.vpc.VPCServiceApplication;
-import com.chinamcloud.vpc.POJO.VpcDO;
+import com.chinamcloud.vpc.entity.VpcDO;
 import com.chinamcloud.vpc.repository.db.VPCRepository;
 
 @RunWith(SpringRunner.class)

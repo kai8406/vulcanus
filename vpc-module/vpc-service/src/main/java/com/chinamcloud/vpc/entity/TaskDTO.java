@@ -1,4 +1,4 @@
-package com.chinamcloud.vpc.POJO;
+package com.chinamcloud.vpc.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

@@ -8,10 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
-import com.chinamcloud.vpc.POJO.CreateVpcRequest;
-import com.chinamcloud.vpc.POJO.TaskDTO;
-import com.chinamcloud.vpc.POJO.VpcDO;
 import com.chinamcloud.vpc.client.TaskClient;
+import com.chinamcloud.vpc.entity.CreateVpcRequest;
+import com.chinamcloud.vpc.entity.TaskDTO;
+import com.chinamcloud.vpc.entity.VpcDO;
 import com.chinamcloud.vpc.service.db.VPCService;
 import com.chinamcloud.vpc.util.mapper.BeanMapper;
 import com.chinamcloud.vpc.util.mapper.JsonMapper;

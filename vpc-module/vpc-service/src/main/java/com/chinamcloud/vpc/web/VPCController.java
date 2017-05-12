@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.chinamcloud.vpc.POJO.CreateVpcRequest;
-import com.chinamcloud.vpc.POJO.VpcDO;
 import com.chinamcloud.vpc.business.VPCBusiness;
+import com.chinamcloud.vpc.entity.CreateVpcRequest;
+import com.chinamcloud.vpc.entity.VpcDO;
 
 @RestController
 @RequestMapping("/vpc")

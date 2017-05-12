@@ -1,4 +1,4 @@
-package com.chinamcloud.vpc.POJO;
+package com.chinamcloud.vpc.entity;
 
 import java.util.Date;
 
