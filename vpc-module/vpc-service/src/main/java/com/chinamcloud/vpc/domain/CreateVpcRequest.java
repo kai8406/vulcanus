@@ -1,4 +1,4 @@
-package com.chinamcloud.vpc.controller;
+package com.chinamcloud.vpc.domain;
 
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
@@ -6,14 +6,15 @@ import org.hibernate.validator.constraints.NotBlank;
 import lombok.Data;
 
 @Data
-public class VPC {
+public class CreateVpcRequest {
 
-	@NotBlank(message = "access_token不能为空.")
+	@NotBlank
 	private String access_token;
 
 	@NotBlank
 	private String callType = "api";
 
+	@NotBlank
 	private String platformId;
 
 	@NotBlank
@@ -24,10 +25,10 @@ public class VPC {
 
 	private String userCidr;
 
-	@Length(max = 28)
+	@Length(min = 2, max = 128)
 	private String vpcName;
 
-	@Length(max = 28)
+	@Length(min = 2, max = 256)
 	private String description;
 
 }

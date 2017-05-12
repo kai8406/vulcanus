@@ -1,4 +1,4 @@
-package com.chinamcloud.vpc.controller;
+package com.chinamcloud.vpc.web;
 
 import javax.validation.Valid;
 
@@ -8,17 +8,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.RestTemplate;
 
 import com.chinamcloud.vpc.business.VPCBusiness;
+import com.chinamcloud.vpc.domain.CreateVpcRequest;
 import com.chinamcloud.vpc.domain.VPCVO;
 
 @RestController
 @RequestMapping("/vpc")
 public class VPCController {
-
-	@Autowired
-	private RestTemplate restTemplate;
 
 	@Autowired
 	private VPCBusiness business;
@@ -28,10 +25,6 @@ public class VPCController {
 			@RequestParam(value = "callType", defaultValue = "api") String callType,
 			@RequestParam(value = "platformId") String platformId, @RequestParam(value = "regionId") String regionId,
 			@RequestParam(value = "vpcId") String cidrBlock) {
-
-		// String userId = restTemplate
-		// .getForEntity("http://AUTH-SERVER/users/id?access_token=" + access_token, String.class).getBody();
-		// System.err.println(userId);
 
 		return business.getVPC();
 	}
@@ -51,12 +44,8 @@ public class VPCController {
 	}
 
 	@RequestMapping(value = "/", method = RequestMethod.POST)
-	public VPCVO saveVPC(@Valid @RequestBody VPC vpc) {
-
-		System.out.println(vpc);
-
+	public VPCVO saveVPC(@Valid @RequestBody CreateVpcRequest vpc) {
 		return new VPCVO();
-		// return business.saveVPC();
 	}
 
 	@RequestMapping(value = "/", method = RequestMethod.PUT)

@@ -1,4 +1,4 @@
-package com.chinamcloud.vpc.utils;
+package com.chinamcloud.vpc.utils.mapper;
 
 import java.io.IOException;
 

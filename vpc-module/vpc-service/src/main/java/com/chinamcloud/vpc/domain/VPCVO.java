@@ -6,13 +6,19 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.GenericGenerator;
+
+import lombok.Data;
+
 @Entity
 @Table(name = "vpc_service")
+@Data
 public class VPCVO {
 
 	@Id
-	@GeneratedValue
-	private Integer id;
+	@GenericGenerator(name = "system-uuid", strategy = "uuid")
+	@GeneratedValue(generator = "system-uuid")
+	private String id;
 
 	@Column(name = "cidr")
 	private String cidr;
@@ -34,69 +40,5 @@ public class VPCVO {
 
 	@Column(name = "vpc_name")
 	private String vpcName;
-
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
-	public String getCidr() {
-		return cidr;
-	}
-
-	public void setCidr(String cidr) {
-		this.cidr = cidr;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
-	public String getPlatformId() {
-		return platformId;
-	}
-
-	public void setPlatformId(String platformId) {
-		this.platformId = platformId;
-	}
-
-	public String getRegionId() {
-		return regionId;
-	}
-
-	public void setRegionId(String regionId) {
-		this.regionId = regionId;
-	}
-
-	public String getUuid() {
-		return uuid;
-	}
-
-	public void setUuid(String uuid) {
-		this.uuid = uuid;
-	}
-
-	public String getVpcCode() {
-		return vpcCode;
-	}
-
-	public void setVpcCode(String vpcCode) {
-		this.vpcCode = vpcCode;
-	}
-
-	public String getVpcName() {
-		return vpcName;
-	}
-
-	public void setVpcName(String vpcName) {
-		this.vpcName = vpcName;
-	}
 
 }

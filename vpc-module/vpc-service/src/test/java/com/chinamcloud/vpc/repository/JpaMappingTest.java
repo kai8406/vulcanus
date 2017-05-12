@@ -9,20 +9,17 @@ import javax.persistence.metamodel.Metamodel;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.chinamcloud.vpc.VPCServiceApplication;
 
+import lombok.extern.slf4j.Slf4j;
+
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = VPCServiceApplication.class)
-@Rollback
+@Slf4j
 public class JpaMappingTest {
-
-	private final Logger logger = LoggerFactory.getLogger(getClass());
 
 	@PersistenceContext
 	private EntityManager em;
@@ -39,11 +36,11 @@ public class JpaMappingTest {
 		for (EntityType<?> entityType : model.getEntities()) {
 			String entityName = entityType.getName();
 			em.createQuery("select o from " + entityName + " o").getResultList();
-			logger.info("ok: " + entityName);
+			log.info("ok: " + entityName);
 			i++;
 		}
 
-		logger.info("total: " + i);
+		log.info("total: " + i);
 
 	}
 

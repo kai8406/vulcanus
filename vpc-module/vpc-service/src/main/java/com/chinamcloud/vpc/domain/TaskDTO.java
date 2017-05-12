@@ -1,33 +1,21 @@
 package com.chinamcloud.vpc.domain;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class TaskDTO {
 
-	public String code;
+	public String id;
 	public String resourceCode;
-	public Long id;
+	public String action;
+	public String requestData;
+	public String state;
+	public String responseCode;
+	public String responseData;
 
-	
-	public String getResourceCode() {
-		return resourceCode;
-	}
-
-	public void setResourceCode(String resourceCode) {
-		this.resourceCode = resourceCode;
-	}
-
-	public String getCode() {
-		return code;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setCode(String code) {
-		this.code = code;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
+ 
 }
