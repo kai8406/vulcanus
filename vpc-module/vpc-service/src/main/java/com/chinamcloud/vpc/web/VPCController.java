@@ -15,37 +15,37 @@ import com.chinamcloud.vpc.entity.VpcDO;
 
 @RestController
 @RequestMapping("/vpc")
-public class VPCController {
+public class VpcController {
 
 	@Autowired
 	private VPCBusiness business;
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public VpcDO getVPC(@RequestParam(value = "access_token") String access_token,
+	public VpcDO getVpc(@RequestParam(value = "access_token") String access_token,
 			@RequestParam(value = "callType", defaultValue = "api") String callType,
 			@RequestParam(value = "platformId") String platformId, @RequestParam(value = "regionId") String regionId,
 			@RequestParam(value = "vpcId") String cidrBlock) {
 
-		return business.getVPC();
+		return null;
 	}
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public VpcDO listVPC(@RequestParam(value = "access_token") String access_token,
+	public VpcDO listVpc(@RequestParam(value = "access_token") String access_token,
 			@RequestParam(value = "callType", defaultValue = "api") String callType,
 			@RequestParam(value = "platformId") String platformId) {
 		return null;
 	}
 
 	@RequestMapping(value = "/", method = RequestMethod.DELETE)
-	public VpcDO removeVPC(@RequestParam(value = "access_token") String access_token,
+	public VpcDO removeVpc(@RequestParam(value = "access_token") String access_token,
 			@RequestParam(value = "callType", defaultValue = "api") String callType,
 			@RequestParam(value = "platformId") String platformId, @RequestParam(value = "vpcId") String vpcId) {
 		return null;
 	}
 
 	@RequestMapping(value = "/", method = RequestMethod.POST)
-	public VpcDO saveVPC(@Valid @RequestBody CreateVpcRequest vpc) {
-		return business.saveVPC(vpc);
+	public VpcDO saveVpc(@Valid @RequestBody CreateVpcRequest vpc) {
+		return business.saveVpc(vpc);
 	}
 
 	@RequestMapping(value = "/", method = RequestMethod.PUT)

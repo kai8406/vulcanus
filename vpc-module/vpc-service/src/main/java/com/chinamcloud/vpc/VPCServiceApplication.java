@@ -14,10 +14,10 @@ import org.springframework.web.client.RestTemplate;
 
 @SpringCloudApplication
 @EnableFeignClients
-public class VPCServiceApplication {
+public class VpcServiceApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(VPCServiceApplication.class, args);
+		SpringApplication.run(VpcServiceApplication.class, args);
 	}
 
 	@Bean
