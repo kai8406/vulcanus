@@ -6,12 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.chinamcloud.vpc.VPCServiceApplication;
+import com.chinamcloud.vpc.VpcServiceApplication;
 import com.chinamcloud.vpc.entity.VpcDO;
 import com.chinamcloud.vpc.repository.db.VPCRepository;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = VPCServiceApplication.class)
+@SpringBootTest(classes = VpcServiceApplication.class)
 public class VpcServiceTest {
 
 	@Autowired

@@ -1,4 +1,4 @@
-package com.chinamcloud.vpc.business;
+package com.chinamcloud.vpc.client;
 
 public enum TaskStatusEnum {
 

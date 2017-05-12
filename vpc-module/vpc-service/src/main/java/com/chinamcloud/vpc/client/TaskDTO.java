@@ -1,4 +1,4 @@
-package com.chinamcloud.vpc.entity;
+package com.chinamcloud.vpc.client;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -19,5 +19,4 @@ public class TaskDTO {
 	public String responseCode;
 	public String responseData;
 
- 
 }

@@ -9,8 +9,9 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 import com.chinamcloud.vpc.client.TaskClient;
+import com.chinamcloud.vpc.client.TaskDTO;
+import com.chinamcloud.vpc.client.TaskStatusEnum;
 import com.chinamcloud.vpc.entity.CreateVpcRequest;
-import com.chinamcloud.vpc.entity.TaskDTO;
 import com.chinamcloud.vpc.entity.VpcDO;
 import com.chinamcloud.vpc.service.db.VPCService;
 import com.chinamcloud.vpc.util.mapper.BeanMapper;
@@ -43,7 +44,7 @@ public class VPCBusiness {
 
 	private static final String VPC_CREATE_ROUTINGKEY = "cmop.vpc.create";
 
-	public VpcDO saveVPC(CreateVpcRequest request) {
+	public VpcDO saveVpc(CreateVpcRequest request) {
 
 		/**
 		 * 1.根据Token获得UserId
@@ -86,10 +87,6 @@ public class VPCBusiness {
 		template.convertAndSend(topic.getName(), VPC_CREATE_ROUTINGKEY, binder.toJson(requestDO));
 
 		return requestDO;
-	}
-
-	public VpcDO getVPC() {
-		return service.find("1");
 	}
 
 }

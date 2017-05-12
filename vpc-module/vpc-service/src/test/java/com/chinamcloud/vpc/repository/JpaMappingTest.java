@@ -12,12 +12,12 @@ import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.chinamcloud.vpc.VPCServiceApplication;
+import com.chinamcloud.vpc.VpcServiceApplication;
 
 import lombok.extern.slf4j.Slf4j;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = VPCServiceApplication.class)
+@SpringBootTest(classes = VpcServiceApplication.class)
 @Slf4j
 public class JpaMappingTest {
 

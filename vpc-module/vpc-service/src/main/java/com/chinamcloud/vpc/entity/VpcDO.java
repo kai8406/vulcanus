@@ -34,6 +34,11 @@ public class VpcDO {
 	@Column(name = "task_id")
 	private String task_id;
 
+
+	@Column(name = "uuid")
+	private String uuid;
+
+	
 	@Column(name = "region_id")
 	private String regionId;
 
@@ -48,17 +53,16 @@ public class VpcDO {
 
 	@Column(name = "status")
 	private String status;
-
-	@Column(name = "uuid")
-	private String uuid;
+	
+	@Column(name = "is_available")
+	private boolean available = true;
 
 	@Column(name = "create_time")
 	private Date createTime;
 
-	@Column(name = "create_time")
+	@Column(name = "modify_time")
 	private Date modifyTime;
 
-	@Column(name = "is_available")
-	private boolean available = true;
+
 
 }
