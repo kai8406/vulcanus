@@ -13,6 +13,6 @@ import org.springframework.data.repository.NoRepositoryBean;
  */
 @NoRepositoryBean
 // 该注释在1.7实现,表示该接口不能当做一个Repository接口
-public interface JpaSpecificationRepository<T> extends JpaRepository<T, Integer>, JpaSpecificationExecutor<T> {
+public interface JpaSpecificationRepository<T> extends JpaRepository<T, String>, JpaSpecificationExecutor<T> {
 
 }

@@ -1,4 +1,4 @@
-package com.chinamcloud.task.controller;
+package com.chinamcloud.task.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.chinamcloud.task.business.TaskBusiness;
-import com.chinamcloud.task.domain.TaskDTO;
+import com.chinamcloud.task.entity.TaskDTO;
 
 @RestController
 @RequestMapping("/task")

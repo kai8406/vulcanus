@@ -105,7 +105,7 @@ public abstract class BaseEntityCrudServiceImpl<T, R extends JpaSpecificationRep
 	}
 
 	@Override
-	public void delete(Integer id) {
+	public void delete(String id) {
 		getRepository().delete(id);
 	}
 
@@ -120,12 +120,12 @@ public abstract class BaseEntityCrudServiceImpl<T, R extends JpaSpecificationRep
 	}
 
 	@Override
-	public boolean exists(Integer id) {
+	public boolean exists(String id) {
 		return getRepository().exists(id);
 	}
 
 	@Override
-	public T find(Integer id) {
+	public T find(String id) {
 		return getRepository().findOne(id);
 	}
 

@@ -1,4 +1,4 @@
-package com.chinamcloud.task.utils;
+package com.chinamcloud.task.util;
 
 import java.io.IOException;
 

@@ -1,4 +1,4 @@
-package com.chinamcloud.task.domain;
+package com.chinamcloud.task.entity;
 
 public class TaskDTO {
 

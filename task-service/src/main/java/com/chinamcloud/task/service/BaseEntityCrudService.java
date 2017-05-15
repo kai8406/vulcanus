@@ -25,7 +25,7 @@ public interface BaseEntityCrudService<T> {
 	 * 
 	 * @param id
 	 */
-	public void delete(Integer id);
+	public void delete(String id);
 
 	/**
 	 * 删除Entity
@@ -47,7 +47,7 @@ public interface BaseEntityCrudService<T> {
 	 * @param id
 	 * @return
 	 */
-	public boolean exists(Integer id);
+	public boolean exists(String id);
 
 	/**
 	 * 查询Entity
@@ -55,7 +55,7 @@ public interface BaseEntityCrudService<T> {
 	 * @param id
 	 * @return
 	 */
-	public T find(Integer id);
+	public T find(String id);
 
 	/**
 	 * 查询Entity数量

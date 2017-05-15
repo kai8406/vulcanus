@@ -2,8 +2,8 @@ package com.chinamcloud.task.business;
 
 import org.springframework.stereotype.Component;
 
-import com.chinamcloud.task.domain.TaskDTO;
-import com.chinamcloud.task.utils.JsonMapper;
+import com.chinamcloud.task.entity.TaskDTO;
+import com.chinamcloud.task.util.JsonMapper;
 
 @Component
 public class TaskBusiness {
