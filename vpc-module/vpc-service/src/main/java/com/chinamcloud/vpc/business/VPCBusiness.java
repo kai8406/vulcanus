@@ -13,7 +13,7 @@ import com.chinamcloud.vpc.client.TaskDTO;
 import com.chinamcloud.vpc.client.TaskStatusEnum;
 import com.chinamcloud.vpc.entity.CreateVpcRequest;
 import com.chinamcloud.vpc.entity.VpcDO;
-import com.chinamcloud.vpc.service.db.VPCService;
+import com.chinamcloud.vpc.service.db.VpcService;
 import com.chinamcloud.vpc.util.mapper.BeanMapper;
 import com.chinamcloud.vpc.util.mapper.JsonMapper;
 
@@ -27,7 +27,7 @@ public class VPCBusiness {
 	private TopicExchange topic;
 
 	@Autowired
-	private VPCService service;
+	private VpcService service;
 
 	@Autowired
 	private TaskClient taskClient;
@@ -45,7 +45,7 @@ public class VPCBusiness {
 	/**
 	 * {@value}
 	 */
-	private static final String VPC_CREATE_ROUTINGKEY = "cmop.vpc.create";
+	private static final String VPC_SAVE_ROUTINGKEY = "cmop.vpc.save";
 
 	public VpcDO saveVpc(CreateVpcRequest request) {
 
@@ -75,7 +75,7 @@ public class VPCBusiness {
 		// Step.3
 		TaskDTO taskDTO = new TaskDTO();
 		taskDTO.setStatus(TaskStatusEnum.执行中.toString());
-		taskDTO.setAction(VPC_CREATE_ROUTINGKEY);
+		taskDTO.setAction(VPC_SAVE_ROUTINGKEY);
 		taskDTO.setRequestData(requestDO.toString());
 		taskDTO.setResourceId(requestDO.getId());
 
@@ -87,7 +87,7 @@ public class VPCBusiness {
 		requestDO = service.saveAndFlush(requestDO);
 
 		// Step.5
-		template.convertAndSend(topic.getName(), VPC_CREATE_ROUTINGKEY, binder.toJson(requestDO));
+		template.convertAndSend(topic.getName(), VPC_SAVE_ROUTINGKEY, binder.toJson(requestDO));
 
 		return requestDO;
 	}

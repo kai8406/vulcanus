@@ -1,35 +1,38 @@
 package com.chinamcloud.task.business;
 
+import java.util.Date;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.chinamcloud.task.entity.TaskDTO;
+import com.chinamcloud.task.service.db.TaskService;
 import com.chinamcloud.task.util.JsonMapper;
 
 @Component
 public class TaskBusiness {
 
+	@Autowired
+	private TaskService service;
+
 	protected static JsonMapper binder = JsonMapper.nonEmptyMapper();
 
-	public TaskDTO saveTask(String vpcCode) {
+	public TaskDTO saveTask(TaskDTO taskDTO) {
 
-		TaskDTO dto = new TaskDTO();
-		dto.setId(1L);
-		dto.setCode("task-code");
-		dto.setResourceCode(vpcCode);
+		taskDTO.setCreateTime(new Date());
 
-		// 拓扑图关系持久化
-		return dto;
+		return service.saveAndFlush(taskDTO);
 	}
 
-	public TaskDTO getTask(String code) {
+	public TaskDTO getTask(String id) {
+		return service.find(id);
+	}
 
-		TaskDTO dto = new TaskDTO();
-		dto.setId(1L);
-		dto.setCode(code);
-		dto.setResourceCode("resoucesCode");
+	public TaskDTO updateTask(TaskDTO taskDTO) {
 
-		// 拓扑图关系持久化
-		return dto;
+		taskDTO.setModifyTime(new Date());
+
+		return service.saveAndFlush(taskDTO);
 	}
 
 }

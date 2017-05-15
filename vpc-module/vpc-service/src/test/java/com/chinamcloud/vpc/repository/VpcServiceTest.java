@@ -8,14 +8,14 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import com.chinamcloud.vpc.VpcServiceApplication;
 import com.chinamcloud.vpc.entity.VpcDO;
-import com.chinamcloud.vpc.repository.db.VPCRepository;
+import com.chinamcloud.vpc.repository.db.VpcRepository;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = VpcServiceApplication.class)
 public class VpcServiceTest {
 
 	@Autowired
-	private VPCRepository repository;
+	private VpcRepository repository;
 
 	@Test
 	public void createVPC() {
