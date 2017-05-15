@@ -42,6 +42,9 @@ public class VPCBusiness {
 				.getBody();
 	}
 
+	/**
+	 * {@value}
+	 */
 	private static final String VPC_CREATE_ROUTINGKEY = "cmop.vpc.create";
 
 	public VpcDO saveVpc(CreateVpcRequest request) {
