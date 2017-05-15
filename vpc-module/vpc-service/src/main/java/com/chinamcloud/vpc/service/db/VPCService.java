@@ -5,18 +5,18 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.chinamcloud.vpc.entity.VpcDO;
-import com.chinamcloud.vpc.repository.db.VPCRepository;
+import com.chinamcloud.vpc.repository.db.VpcRepository;
 import com.chinamcloud.vpc.service.BaseEntityCrudServiceImpl;
 
 @Service
 @Transactional
-public class VPCService extends BaseEntityCrudServiceImpl<VpcDO, VPCRepository> {
+public class VpcService extends BaseEntityCrudServiceImpl<VpcDO, VpcRepository> {
 
 	@Autowired
-	private VPCRepository repository;
+	private VpcRepository repository;
 
 	@Override
-	protected VPCRepository getRepository() {
+	protected VpcRepository getRepository() {
 		return repository;
 	}
 
