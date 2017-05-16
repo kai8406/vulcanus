@@ -7,15 +7,15 @@ import org.springframework.amqp.rabbit.annotation.Queue;
 import org.springframework.amqp.rabbit.annotation.QueueBinding;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 
-public interface VPCMQService {
+public interface VpcMQService {
 	
 	@RabbitListener(
 			bindings = @QueueBinding(
 					exchange = @Exchange(value = "cmop.topic", durable = "true",autoDelete = "false",type = ExchangeTypes.TOPIC), 
-					value = @Queue(value = "cmop.vpc.vmware.create", durable = "false",autoDelete="true"), 
-					key = "cmop.vpc.create"
+					value = @Queue(value = "cmop.vpc.aliyun.save", durable = "false",autoDelete="true"), 
+					key = "cmop.vpc.save"
 					)
 		)
-	public void createVPC(Message message);
+	public void saveVpc(Message message);
 
 }

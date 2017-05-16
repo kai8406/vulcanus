@@ -1,8 +1,15 @@
 package com.chinamcloud.vpc.web;
 
+import java.util.Map;
+
+import javax.servlet.ServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,11 +22,14 @@ import com.chinamcloud.vpc.entity.CreateVpcRequest;
 import com.chinamcloud.vpc.entity.DeleteVpcRequest;
 import com.chinamcloud.vpc.entity.UpdateVpcRequest;
 import com.chinamcloud.vpc.entity.VpcDO;
+import com.chinamcloud.vpc.util.Servlets;
 import com.chinamcloud.vpc.util.exception.RestResult;
 
 @RestController
 @RequestMapping("/vpc")
 public class VpcController {
+
+	public static final String Request_Prefix = "search_";
 
 	@Autowired
 	private VPCBusiness business;
@@ -29,11 +39,13 @@ public class VpcController {
 		return business.getVpc(id);
 	}
 
-	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public VpcDO listVpc(@RequestParam(value = "access_token") String access_token,
-			@RequestParam(value = "callType", defaultValue = "api") String callType,
-			@RequestParam(value = "platformId") String platformId) {
-		return null;
+	@RequestMapping(value = "/", method = RequestMethod.GET)
+	public RestResult<Page<VpcDO>>  listVpc(@PageableDefault(direction = Direction.DESC, sort = { "id" }) Pageable pageable,
+			ServletRequest request) {
+
+		Map<String, Object> searchParams = Servlets.getParametersStartingWith(request, Request_Prefix);
+
+		return business.findAll(searchParams, pageable);
 	}
 
 	@RequestMapping(value = "/", method = RequestMethod.DELETE)

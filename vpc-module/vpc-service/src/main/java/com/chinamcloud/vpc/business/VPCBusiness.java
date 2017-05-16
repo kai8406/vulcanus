@@ -1,10 +1,13 @@
 package com.chinamcloud.vpc.business;
 
 import java.util.Date;
+import java.util.Map;
 
 import org.springframework.amqp.core.TopicExchange;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
@@ -134,6 +137,12 @@ public class VPCBusiness {
 		RestResult<VpcDO> result = new RestResult<>();
 		result.setSuccessResult(vpcDO);
 
+		return result;
+	}
+
+	public RestResult<Page<VpcDO>> findAll(Map<String, Object> searchParams, Pageable pageable) {
+		RestResult<Page<VpcDO>> result = new RestResult<>();
+		result.setSuccessResult(service.findAll(searchParams, pageable));
 		return result;
 	}
 

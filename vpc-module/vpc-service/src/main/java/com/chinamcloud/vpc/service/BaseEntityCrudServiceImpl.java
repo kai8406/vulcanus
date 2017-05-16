@@ -13,6 +13,8 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 
 import com.chinamcloud.vpc.repository.JpaSpecificationRepository;
@@ -142,6 +144,11 @@ public abstract class BaseEntityCrudServiceImpl<T, R extends JpaSpecificationRep
 	@Override
 	public List<T> findAll(Map<String, Object> searchParams) {
 		return getRepository().findAll(buildSpecification(searchParams));
+	}
+
+	@Override
+	public Page<T> findAll(Map<String, Object> searchParams, Pageable pageable) {
+		return getRepository().findAll(buildSpecification(searchParams), pageable);
 	}
 
 	protected abstract R getRepository();

@@ -19,7 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class GlobalExceptionHandler {
 
-	@ExceptionHandler(value = RuntimeException.class)
+//	@ExceptionHandler(value = RuntimeException.class)
 	private <T> RestResult<T> runtimeExceptionHandler(RuntimeException exception) {
 
 		if (log.isDebugEnabled()) {
