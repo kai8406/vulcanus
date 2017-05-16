@@ -3,6 +3,7 @@ package com.chinamcloud.vpc.web;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -11,7 +12,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.chinamcloud.vpc.business.VPCBusiness;
 import com.chinamcloud.vpc.entity.CreateVpcRequest;
+import com.chinamcloud.vpc.entity.DeleteVpcRequest;
+import com.chinamcloud.vpc.entity.UpdateVpcRequest;
 import com.chinamcloud.vpc.entity.VpcDO;
+import com.chinamcloud.vpc.util.exception.RestResult;
 
 @RestController
 @RequestMapping("/vpc")
@@ -20,13 +24,9 @@ public class VpcController {
 	@Autowired
 	private VPCBusiness business;
 
-	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public VpcDO getVpc(@RequestParam(value = "access_token") String access_token,
-			@RequestParam(value = "callType", defaultValue = "api") String callType,
-			@RequestParam(value = "platformId") String platformId, @RequestParam(value = "regionId") String regionId,
-			@RequestParam(value = "vpcId") String cidrBlock) {
-
-		return null;
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
+	public RestResult<VpcDO> getVpc(@PathVariable("id") String id) {
+		return business.getVpc(id);
 	}
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
@@ -37,24 +37,17 @@ public class VpcController {
 	}
 
 	@RequestMapping(value = "/", method = RequestMethod.DELETE)
-	public VpcDO removeVpc(@RequestParam(value = "access_token") String access_token,
-			@RequestParam(value = "callType", defaultValue = "api") String callType,
-			@RequestParam(value = "platformId") String platformId, @RequestParam(value = "vpcId") String vpcId) {
-		return null;
+	public RestResult<?> removeVpc(@Valid @RequestBody DeleteVpcRequest vpc) {
+		return business.removeVpc(vpc);
 	}
 
 	@RequestMapping(value = "/", method = RequestMethod.POST)
-	public VpcDO saveVpc(@Valid @RequestBody CreateVpcRequest vpc) {
+	public RestResult<VpcDO> saveVpc(@Valid @RequestBody CreateVpcRequest vpc) {
 		return business.saveVpc(vpc);
 	}
 
 	@RequestMapping(value = "/", method = RequestMethod.PUT)
-	public VpcDO updateVPC(@RequestParam(value = "access_token") String access_token,
-			@RequestParam(value = "callType", defaultValue = "api") String callType,
-			@RequestParam(value = "platformId") String platformId, @RequestParam(value = "vpcId") String vpcId,
-			@RequestParam(value = "vpcName", required = false) String vpcName,
-			@RequestParam(value = "description", required = false) String description,
-			@RequestParam(value = "userCidr", required = false) String userCidr) {
-		return null;
+	public RestResult<VpcDO> updateVpc(@Valid @RequestBody UpdateVpcRequest vpc) {
+		return business.updateVpc(vpc);
 	}
 }

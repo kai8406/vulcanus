@@ -42,7 +42,6 @@ public class GlobalExceptionHandler {
 
 			invalidArgument.setDefaultMessage(error.getDefaultMessage());
 			invalidArgument.setField(error.getField());
-			invalidArgument.setRejectedValue(error.getRejectedValue());
 			list.add(invalidArgument);
 		}
 

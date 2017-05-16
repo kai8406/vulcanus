@@ -1,4 +1,4 @@
-package com.chinamcloud.vpc.util.exception;
+package com.chinamcloud.vmware.entity;
 
 import org.springframework.http.HttpStatus;
 

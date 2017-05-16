@@ -1,4 +1,4 @@
-package com.chinamcloud.vpc.entity;
+package com.chinamcloud.vmware.entity;
 
 import java.util.Date;
 
@@ -16,10 +16,10 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Data;
 
-@Entity
-@Table(name = "vpc_service")
 @Data
-public class VpcDO {
+@Entity
+@Table(name = "vpc_aliyun")
+public class VpcDTO {
 
 	@Id
 	@GenericGenerator(name = "system-uuid", strategy = "uuid")
