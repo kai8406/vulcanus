@@ -85,17 +85,17 @@ public class VPCBusiness {
 		taskDTO.setRequestData(requestDO.toString());
 		taskDTO.setResourceId(requestDO.getId());
 
-		TaskDTO saveTaskDTO = taskClient.saveTask(taskDTO);
+		taskDTO = taskClient.saveTask(taskDTO);
 
 		// Step.4
 
-		requestDO.setTaskId(saveTaskDTO.getId());
+		requestDO.setTaskId(taskDTO.getId());
 
 		// Step.5
 		template.convertAndSend(topic.getName(), VPC_SAVE_ROUTINGKEY, binder.toJson(requestDO));
 
 		RestResult<VpcDO> result = new RestResult<>();
-		result.setSuccessResult(requestDO);
+		result.setSuccessResult(taskDTO.getId(), requestDO);
 
 		return result;
 	}
@@ -107,9 +107,17 @@ public class VPCBusiness {
 		return service.saveAndFlush(vpcDO);
 	}
 
-	public RestResult<VpcDO> updateVpc(UpdateVpcRequest vpc) {
+	public RestResult<VpcDO> updateVpc(String id, UpdateVpcRequest vpc) {
 
-		VpcDO vpcDO = service.find(vpc.getVpcId());
+		TaskDTO taskDTO = new TaskDTO();
+		taskDTO.setStatus(TaskStatusEnum.执行中.toString());
+		taskDTO.setAction("cmop.vpc.update");
+		taskDTO.setRequestData(vpc.toString());
+		taskDTO.setResourceId(id);
+
+		taskDTO = taskClient.saveTask(taskDTO);
+
+		VpcDO vpcDO = service.find(id);
 
 		vpcDO.setDescription(vpc.getDescription());
 		vpcDO.setVpcName(vpc.getVpcName());
@@ -117,32 +125,57 @@ public class VPCBusiness {
 		vpcDO = service.saveAndFlush(vpcDO);
 
 		RestResult<VpcDO> result = new RestResult<>();
-		result.setSuccessResult(vpcDO);
+		result.setSuccessResult(taskDTO.getId(), vpcDO);
 
 		return result;
 	}
 
-	public RestResult<?> removeVpc(DeleteVpcRequest vpc) {
+	public RestResult<?> removeVpc(String id, DeleteVpcRequest vpc) {
 
-		VpcDO vpcDO = service.find(vpc.getVpcId());
+		TaskDTO taskDTO = new TaskDTO();
+		taskDTO.setStatus(TaskStatusEnum.执行中.toString());
+		taskDTO.setAction("cmop.vpc.remove");
+		taskDTO.setRequestData(vpc.toString());
+		taskDTO.setResourceId(id);
+
+		taskDTO = taskClient.saveTask(taskDTO);
+
+		VpcDO vpcDO = service.find(id);
 		vpcDO.setActive("N");
 		vpcDO = service.saveAndFlush(vpcDO);
 
-		return new RestResult<>();
+		RestResult<VpcDO> result = new RestResult<>();
+		result.setSuccessResult(taskDTO.getId(), vpcDO);
+		return result;
 	}
 
 	public RestResult<VpcDO> getVpc(String id) {
+
+		TaskDTO taskDTO = new TaskDTO();
+		taskDTO.setStatus(TaskStatusEnum.执行中.toString());
+		taskDTO.setAction("cmop.vpc.get");
+		taskDTO.setRequestData(id);
+		taskDTO.setResourceId(id);
+		taskDTO = taskClient.saveTask(taskDTO);
+
 		VpcDO vpcDO = service.find(id);
 
 		RestResult<VpcDO> result = new RestResult<>();
-		result.setSuccessResult(vpcDO);
-
+		result.setSuccessResult(taskDTO.getId(), vpcDO);
 		return result;
 	}
 
 	public RestResult<Page<VpcDO>> findAll(Map<String, Object> searchParams, Pageable pageable) {
+
+		TaskDTO taskDTO = new TaskDTO();
+		taskDTO.setStatus(TaskStatusEnum.执行中.toString());
+		taskDTO.setAction("cmop.vpc.list");
+		taskDTO.setRequestData(searchParams.toString());
+		taskDTO.setResourceId("");
+		taskDTO = taskClient.saveTask(taskDTO);
+
 		RestResult<Page<VpcDO>> result = new RestResult<>();
-		result.setSuccessResult(service.findAll(searchParams, pageable));
+		result.setSuccessResult(taskDTO.getId(), service.findAll(searchParams, pageable));
 		return result;
 	}
 
