@@ -15,7 +15,6 @@ import com.chinamcloud.vpc.client.TaskClient;
 import com.chinamcloud.vpc.client.TaskDTO;
 import com.chinamcloud.vpc.client.TaskStatusEnum;
 import com.chinamcloud.vpc.entity.CreateVpcRequest;
-import com.chinamcloud.vpc.entity.DeleteVpcRequest;
 import com.chinamcloud.vpc.entity.UpdateVpcRequest;
 import com.chinamcloud.vpc.entity.VpcDO;
 import com.chinamcloud.vpc.service.db.VpcService;
@@ -53,7 +52,7 @@ public class VPCBusiness {
 	 */
 	private static final String VPC_SAVE_ROUTINGKEY = "cmop.vpc.save";
 
-	public RestResult<VpcDO> saveVpc(CreateVpcRequest request) {
+	public RestResult<VpcDO> saveVpc(String accessToken, CreateVpcRequest request) {
 
 		/**
 		 * 1.根据Token获得UserId
@@ -69,7 +68,7 @@ public class VPCBusiness {
 		 */
 
 		// Step.1
-		String userId = getUserId(request.getAccess_token());
+		String userId = getUserId(accessToken);
 
 		// Step.2
 		VpcDO requestDO = BeanMapper.map(request, VpcDO.class);
@@ -107,7 +106,7 @@ public class VPCBusiness {
 		return service.saveAndFlush(vpcDO);
 	}
 
-	public RestResult<VpcDO> updateVpc(String id, UpdateVpcRequest vpc) {
+	public RestResult<VpcDO> updateVpc(String accessToken, String id, UpdateVpcRequest vpc) {
 
 		TaskDTO taskDTO = new TaskDTO();
 		taskDTO.setStatus(TaskStatusEnum.执行中.toString());
@@ -130,12 +129,12 @@ public class VPCBusiness {
 		return result;
 	}
 
-	public RestResult<?> removeVpc(String id, DeleteVpcRequest vpc) {
+	public RestResult<?> removeVpc(String accessToken, String id) {
 
 		TaskDTO taskDTO = new TaskDTO();
 		taskDTO.setStatus(TaskStatusEnum.执行中.toString());
 		taskDTO.setAction("cmop.vpc.remove");
-		taskDTO.setRequestData(vpc.toString());
+		taskDTO.setRequestData(id);
 		taskDTO.setResourceId(id);
 
 		taskDTO = taskClient.saveTask(taskDTO);
@@ -149,7 +148,7 @@ public class VPCBusiness {
 		return result;
 	}
 
-	public RestResult<VpcDO> getVpc(String id) {
+	public RestResult<VpcDO> getVpc(String accessToken, String id) {
 
 		TaskDTO taskDTO = new TaskDTO();
 		taskDTO.setStatus(TaskStatusEnum.执行中.toString());
@@ -165,7 +164,7 @@ public class VPCBusiness {
 		return result;
 	}
 
-	public RestResult<Page<VpcDO>> findAll(Map<String, Object> searchParams, Pageable pageable) {
+	public RestResult<Page<VpcDO>> findAll(String accessToken, Map<String, Object> searchParams, Pageable pageable) {
 
 		TaskDTO taskDTO = new TaskDTO();
 		taskDTO.setStatus(TaskStatusEnum.执行中.toString());

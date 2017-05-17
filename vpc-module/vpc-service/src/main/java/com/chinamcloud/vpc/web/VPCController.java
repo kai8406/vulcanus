@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.chinamcloud.vpc.business.VPCBusiness;
@@ -34,8 +35,9 @@ public class VpcController {
 	private VPCBusiness business;
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public RestResult<VpcDO> getVpc(@PathVariable("id") String id) {
-		return business.getVpc(id);
+	public RestResult<VpcDO> getVpc(@PathVariable("id") String id,
+			@RequestParam(value = "access_token") String accessToken) {
+		return business.getVpc(accessToken,id);
 	}
 
 	/**
@@ -50,27 +52,30 @@ public class VpcController {
 	 * @return
 	 */
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public RestResult<Page<VpcDO>> listVpc(
+	public RestResult<Page<VpcDO>> listVpc(@RequestParam(value = "access_token") String accessToken,
 			@PageableDefault(value = 10, direction = Direction.DESC, sort = { "createTime" }) Pageable pageable,
 			ServletRequest request) {
 
 		Map<String, Object> searchParams = Servlets.getParametersStartingWith(request, Request_Prefix);
 
-		return business.findAll(searchParams, pageable);
+		return business.findAll(accessToken, searchParams, pageable);
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-	public RestResult<?> removeVpc(@PathVariable("id") String id, @Valid @RequestBody DeleteVpcRequest vpc) {
-		return business.removeVpc(id, vpc);
+	public RestResult<?> removeVpc(@PathVariable("id") String id,
+			@RequestParam(value = "access_token") String accessToken) {
+		return business.removeVpc(accessToken, id);
 	}
 
 	@RequestMapping(value = "/", method = RequestMethod.POST)
-	public RestResult<VpcDO> saveVpc(@Valid @RequestBody CreateVpcRequest vpc) {
-		return business.saveVpc(vpc);
+	public RestResult<VpcDO> saveVpc(@RequestParam(value = "access_token") String accessToken,
+			@Valid @RequestBody CreateVpcRequest vpc) {
+		return business.saveVpc(accessToken, vpc);
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-	public RestResult<VpcDO> updateVpc(@PathVariable("id") String id, @Valid @RequestBody UpdateVpcRequest vpc) {
-		return business.updateVpc(id, vpc);
+	public RestResult<VpcDO> updateVpc(@PathVariable("id") String id,
+			@RequestParam(value = "access_token") String accessToken, @Valid @RequestBody UpdateVpcRequest vpc) {
+		return business.updateVpc(accessToken, id, vpc);
 	}
 }

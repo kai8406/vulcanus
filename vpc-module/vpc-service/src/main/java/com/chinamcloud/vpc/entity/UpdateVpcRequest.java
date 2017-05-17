@@ -1,15 +1,11 @@
 package com.chinamcloud.vpc.entity;
 
 import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.NotBlank;
 
 import lombok.Data;
 
 @Data
 public class UpdateVpcRequest {
-
-	@NotBlank
-	private String access_token;
 
 	@Length(min = 2, max = 128)
 	private String vpcName;

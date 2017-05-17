@@ -9,9 +9,6 @@ import lombok.Data;
 public class CreateVpcRequest {
 
 	@NotBlank
-	private String access_token;
-
-	@NotBlank
 	private String platformId;
 
 	@NotBlank
