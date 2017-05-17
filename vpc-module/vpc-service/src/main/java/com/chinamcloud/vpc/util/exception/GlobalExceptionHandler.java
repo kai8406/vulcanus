@@ -19,15 +19,15 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class GlobalExceptionHandler {
 
-//	@ExceptionHandler(value = RuntimeException.class)
+	@ExceptionHandler(value = RuntimeException.class)
 	private <T> RestResult<T> runtimeExceptionHandler(RuntimeException exception) {
 
-		if (log.isDebugEnabled()) {
-			log.debug(exception.getLocalizedMessage());
-		}
+		// if (log.isDebugEnabled()) {
+		log.info(exception.getLocalizedMessage());
+		// }
 
 		return new RestResult<T>(HttpStatus.INTERNAL_SERVER_ERROR.value(),
-				HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase(), null);
+				HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase(), "", null);
 	}
 
 	@ExceptionHandler(value = MethodArgumentNotValidException.class)
@@ -46,7 +46,7 @@ public class GlobalExceptionHandler {
 		}
 
 		RestResult<List<ArgumentInvalidResult>> result = new RestResult<List<ArgumentInvalidResult>>(
-				HttpStatus.BAD_REQUEST.value(), HttpStatus.BAD_REQUEST.getReasonPhrase(), list);
+				HttpStatus.BAD_REQUEST.value(), HttpStatus.BAD_REQUEST.getReasonPhrase(), "", list);
 
 		return result;
 	}

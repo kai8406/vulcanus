@@ -17,9 +17,6 @@ public class UpdateVpcRequest {
 	@NotBlank
 	private String platformId;
 
-	@NotBlank
-	private String vpcId;
-
 	@Length(min = 2, max = 128)
 	private String vpcName;
 

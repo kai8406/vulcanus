@@ -48,6 +48,7 @@ public class VpcDO {
 	 * task对象,不持久化.
 	 */
 	@Transient
+	@JsonIgnore
 	private String taskId;
 
 	/**

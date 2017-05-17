@@ -16,7 +16,4 @@ public class DeleteVpcRequest {
 	@NotBlank
 	private String platformId;
 
-	@NotBlank
-	private String vpcId;
-
 }

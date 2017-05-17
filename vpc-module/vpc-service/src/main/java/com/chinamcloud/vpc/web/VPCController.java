@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.chinamcloud.vpc.business.VPCBusiness;
@@ -39,8 +38,20 @@ public class VpcController {
 		return business.getVpc(id);
 	}
 
+	/**
+	 * 分页查询
+	 * 
+	 * size:每页大小,默认为10,URL后面跟上size=20可设定 page:当前页数,从0开始,URL后面跟上page=0可设定页数
+	 * 通过在URL后面跟上sort=id,asc可设定某个字段的排序,可同时设置多个排序条件,默认以创建时间倒序显示.
+	 * 
+	 * 
+	 * @param pageable
+	 * @param request
+	 * @return
+	 */
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public RestResult<Page<VpcDO>>  listVpc(@PageableDefault(direction = Direction.DESC, sort = { "id" }) Pageable pageable,
+	public RestResult<Page<VpcDO>> listVpc(
+			@PageableDefault(value = 10, direction = Direction.DESC, sort = { "createTime" }) Pageable pageable,
 			ServletRequest request) {
 
 		Map<String, Object> searchParams = Servlets.getParametersStartingWith(request, Request_Prefix);
@@ -48,9 +59,9 @@ public class VpcController {
 		return business.findAll(searchParams, pageable);
 	}
 
-	@RequestMapping(value = "/", method = RequestMethod.DELETE)
-	public RestResult<?> removeVpc(@Valid @RequestBody DeleteVpcRequest vpc) {
-		return business.removeVpc(vpc);
+	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+	public RestResult<?> removeVpc(@PathVariable("id") String id, @Valid @RequestBody DeleteVpcRequest vpc) {
+		return business.removeVpc(id, vpc);
 	}
 
 	@RequestMapping(value = "/", method = RequestMethod.POST)
@@ -58,8 +69,8 @@ public class VpcController {
 		return business.saveVpc(vpc);
 	}
 
-	@RequestMapping(value = "/", method = RequestMethod.PUT)
-	public RestResult<VpcDO> updateVpc(@Valid @RequestBody UpdateVpcRequest vpc) {
-		return business.updateVpc(vpc);
+	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+	public RestResult<VpcDO> updateVpc(@PathVariable("id") String id, @Valid @RequestBody UpdateVpcRequest vpc) {
+		return business.updateVpc(id, vpc);
 	}
 }
