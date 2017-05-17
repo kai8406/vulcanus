@@ -33,12 +33,6 @@ public class VpcDO {
 	private String userId;
 
 	/**
-	 * 调用方式. api/platform/sync
-	 */
-	@Column(name = "call_type")
-	private String callType;
-
-	/**
 	 * 平台ID. aws/aliyun/华栖云
 	 */
 	@Column(name = "platform_id")

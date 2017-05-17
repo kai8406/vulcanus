@@ -11,12 +11,6 @@ public class UpdateVpcRequest {
 	@NotBlank
 	private String access_token;
 
-	@NotBlank
-	private String callType = "api";
-
-	@NotBlank
-	private String platformId;
-
 	@Length(min = 2, max = 128)
 	private String vpcName;
 
