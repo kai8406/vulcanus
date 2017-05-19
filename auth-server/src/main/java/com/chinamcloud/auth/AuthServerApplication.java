@@ -58,7 +58,8 @@ public class AuthServerApplication {
 
 			// 定义了客户端细节服务,客户详细信息可以被初始化.
 			clients.inMemory().withClient("vulcanus").secret("vulcanus")
-					.authorizedGrantTypes("client_credentials", "password", "refresh_token").scopes("server");
+					.authorizedGrantTypes("authorization_code", "client_credentials", "password", "refresh_token")
+					.scopes("server");
 		}
 
 		@Override
