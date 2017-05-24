@@ -38,8 +38,7 @@ public class AuthServerApplication {
 
 		@Override
 		public void configure(HttpSecurity http) throws Exception {
-			http.authorizeRequests().antMatchers("/register", "/login.html", "/login").permitAll().anyRequest()
-					.authenticated();
+			http.authorizeRequests().antMatchers("/register").permitAll().anyRequest().authenticated();
 		}
 
 	}
