@@ -20,11 +20,12 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Aut
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.InMemoryTokenStore;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.chinamcloud.auth.service.security.AuthUserDetailsService;
 
 @SpringBootApplication
-// @EnableGlobalMethodSecurity(prePostEnabled = true)
+@SessionAttributes("authorizationRequest")
 public class AuthServerApplication {
 
 	public static void main(String[] args) {
@@ -54,6 +55,9 @@ public class AuthServerApplication {
 		protected void configure(HttpSecurity http) throws Exception {
 
 			http.formLogin().loginPage("/login.html").loginProcessingUrl("/login").permitAll();
+
+			http.requestMatchers().antMatchers("/login", "/oauth/authorize", "/oauth/confirm_access").and()
+					.authorizeRequests().anyRequest().authenticated();
 
 			http.authorizeRequests().antMatchers("/", "/home").permitAll().anyRequest().authenticated().and().csrf()
 					.disable();
@@ -103,7 +107,7 @@ public class AuthServerApplication {
 		public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
 
 			// 定义了客户端细节服务,客户详细信息可以被初始化.
-			clients.inMemory().withClient("vulcanus").secret("vulcanus")
+			clients.inMemory().withClient("acme").secret("acmesecret")
 					.authorizedGrantTypes("authorization_code", "client_credentials", "password", "refresh_token")
 					.scopes("server");
 		}

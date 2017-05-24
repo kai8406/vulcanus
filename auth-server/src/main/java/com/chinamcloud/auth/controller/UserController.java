@@ -26,7 +26,7 @@ public class UserController {
 	@Autowired
 	private UserService service;
 
-	@GetMapping("/me")
+	@GetMapping("/user")
 	public Principal getUser(Principal principal) {
 		System.err.println(principal);
 		System.err.println(principal.getName());
