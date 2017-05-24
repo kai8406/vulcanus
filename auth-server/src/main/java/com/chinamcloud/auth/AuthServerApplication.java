@@ -55,12 +55,8 @@ public class AuthServerApplication {
 
 			http.formLogin().loginPage("/login.html").loginProcessingUrl("/login").permitAll();
 
-			http.authorizeRequests().antMatchers("/", "/home").permitAll().anyRequest().authenticated().and()
-					.formLogin().loginPage("/login").permitAll().and().logout().permitAll().and().csrf().disable();
-
-			// @formatter:off
-			// http.antMatcher("/uaa/**").authorizeRequests().anyRequest().permitAll().and().csrf().disable();
-			// @formatter:on
+			http.authorizeRequests().antMatchers("/", "/home").permitAll().anyRequest().authenticated().and().csrf()
+					.disable();
 		}
 
 		@Autowired
