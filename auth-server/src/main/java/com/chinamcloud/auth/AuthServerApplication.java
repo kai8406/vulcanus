@@ -6,10 +6,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.Ordered;
-import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -26,6 +25,7 @@ import org.springframework.security.oauth2.provider.token.store.InMemoryTokenSto
 import com.chinamcloud.auth.service.security.AuthUserDetailsService;
 
 @SpringBootApplication
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class AuthServerApplication {
 
 	public static void main(String[] args) {
@@ -33,40 +33,41 @@ public class AuthServerApplication {
 	}
 
 	@Configuration
+	@EnableResourceServer
+	class PrincipalRestController extends ResourceServerConfigurerAdapter {
+
+		@Override
+		public void configure(HttpSecurity http) throws Exception {
+			http.authorizeRequests().antMatchers("/register", "/login.html", "/login").permitAll().anyRequest()
+					.authenticated();
+		}
+
+	}
+
+	@Configuration
 	@EnableWebSecurity
 	protected static class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-		@Override
-		@Bean
-		public AuthenticationManager authenticationManagerBean() throws Exception {
-			return super.authenticationManagerBean();
-		}
-
 		@Autowired
 		private AuthUserDetailsService authUserDetailsService;
+
+		@Override
+		protected void configure(HttpSecurity http) throws Exception {
+
+			// @formatter:off
+			http.antMatcher("/uaa/**").authorizeRequests().anyRequest().permitAll().and().csrf().disable();
+			// @formatter:on
+		}
 
 		@Autowired
 		protected void registerAuthentication(final AuthenticationManagerBuilder auth) throws Exception {
 			auth.userDetailsService(authUserDetailsService);
 		}
-	}
-
-	@Configuration
-	@EnableResourceServer
-	protected static class ResourceServer extends ResourceServerConfigurerAdapter {
 
 		@Override
-		public void configure(HttpSecurity http) throws Exception {
-
-			http.csrf().disable();
-
-			http.authorizeRequests().antMatchers("/oauth/token").anonymous();
-
-			// // Require all GET requests to have client "read" scope
-			// http.authorizeRequests().antMatchers(HttpMethod.GET, "/**").access("#oauth2.hasScope('read')");
-			//
-			// // Require all POST requests to have client "write" scope
-			// http.authorizeRequests().antMatchers(HttpMethod.POST, "/**").access("#oauth2.hasScope('write')");
+		@Bean
+		public AuthenticationManager authenticationManagerBean() throws Exception {
+			return super.authenticationManagerBean();
 		}
 
 	}
@@ -80,7 +81,6 @@ public class AuthServerApplication {
 	 */
 	@Configuration
 	@EnableAuthorizationServer
-	@Order(Ordered.LOWEST_PRECEDENCE - 100)
 	protected static class OAuth2AuthorizationConfig extends AuthorizationServerConfigurerAdapter {
 
 		private TokenStore tokenStore = new InMemoryTokenStore();
@@ -104,8 +104,7 @@ public class AuthServerApplication {
 
 			// 定义了客户端细节服务,客户详细信息可以被初始化.
 			clients.inMemory().withClient("vulcanus").secret("vulcanus")
-					.authorizedGrantTypes("authorization_code", "client_credentials", "password", "refresh_token")
-					.scopes("server");
+					.authorizedGrantTypes("client_credentials", "password", "refresh_token").scopes("server");
 		}
 
 		@Override
