@@ -8,7 +8,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -25,7 +24,7 @@ import org.springframework.security.oauth2.provider.token.store.InMemoryTokenSto
 import com.chinamcloud.auth.service.security.AuthUserDetailsService;
 
 @SpringBootApplication
-@EnableGlobalMethodSecurity(prePostEnabled = true)
+// @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class AuthServerApplication {
 
 	public static void main(String[] args) {
@@ -38,7 +37,8 @@ public class AuthServerApplication {
 
 		@Override
 		public void configure(HttpSecurity http) throws Exception {
-			http.authorizeRequests().antMatchers("/register").permitAll().anyRequest().authenticated();
+			http.authorizeRequests().antMatchers("/", "/home", "/register", "/login.html", "/login").permitAll()
+					.anyRequest().authenticated();
 		}
 
 	}
@@ -53,8 +53,13 @@ public class AuthServerApplication {
 		@Override
 		protected void configure(HttpSecurity http) throws Exception {
 
+			http.formLogin().loginPage("/login.html").loginProcessingUrl("/login").permitAll();
+
+			http.authorizeRequests().antMatchers("/", "/home").permitAll().anyRequest().authenticated().and()
+					.formLogin().loginPage("/login").permitAll().and().logout().permitAll().and().csrf().disable();
+
 			// @formatter:off
-			http.antMatcher("/uaa/**").authorizeRequests().anyRequest().permitAll().and().csrf().disable();
+			// http.antMatcher("/uaa/**").authorizeRequests().anyRequest().permitAll().and().csrf().disable();
 			// @formatter:on
 		}
 
@@ -103,7 +108,8 @@ public class AuthServerApplication {
 
 			// 定义了客户端细节服务,客户详细信息可以被初始化.
 			clients.inMemory().withClient("vulcanus").secret("vulcanus")
-					.authorizedGrantTypes("client_credentials", "password", "refresh_token").scopes("server");
+					.authorizedGrantTypes("authorization_code", "client_credentials", "password", "refresh_token")
+					.scopes("server");
 		}
 
 		@Override
