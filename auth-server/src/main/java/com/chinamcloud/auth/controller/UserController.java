@@ -28,7 +28,6 @@ public class UserController {
 
 	@GetMapping("/user")
 	public Principal getUser(Principal principal) {
-		System.err.println(principal);
 		System.err.println(principal.getName());
 		return principal;
 	}
