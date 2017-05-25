@@ -3,7 +3,7 @@ package com.chinamcloud.auth;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.client.SpringCloudApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.chinamcloud.auth.service.security.AuthUserDetailsService;
 
-@SpringBootApplication
+@SpringCloudApplication
 @SessionAttributes("authorizationRequest")
 public class AuthServerApplication {
 
@@ -38,8 +38,8 @@ public class AuthServerApplication {
 
 		@Override
 		public void configure(HttpSecurity http) throws Exception {
-			http.authorizeRequests().antMatchers("/", "/home", "/register", "/login.html", "/login").permitAll()
-					.anyRequest().authenticated();
+			http.authorizeRequests().antMatchers("/", "/home", "/register", "/login.html", "/login", "/code")
+					.permitAll().anyRequest().authenticated();
 		}
 
 	}

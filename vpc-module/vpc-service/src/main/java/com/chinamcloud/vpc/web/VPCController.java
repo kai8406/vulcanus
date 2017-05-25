@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.chinamcloud.vpc.business.VPCBusiness;
 import com.chinamcloud.vpc.entity.CreateVpcRequest;
-import com.chinamcloud.vpc.entity.DeleteVpcRequest;
 import com.chinamcloud.vpc.entity.UpdateVpcRequest;
 import com.chinamcloud.vpc.entity.VpcDO;
 import com.chinamcloud.vpc.util.Servlets;
