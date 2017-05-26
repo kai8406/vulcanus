@@ -107,9 +107,8 @@ public class AuthServerApplication {
 		public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
 
 			// 定义了客户端细节服务,客户详细信息可以被初始化.
-			clients.inMemory().withClient("acme").secret("acmesecret")
-					.authorizedGrantTypes("authorization_code", "client_credentials", "password", "refresh_token")
-					.scopes("server");
+			clients.inMemory().withClient("acme").secret("acmesecret").authorizedGrantTypes("authorization_code",
+					"client_credentials", "implicit", "password", "refresh_token").scopes("server");
 		}
 
 		@Override
