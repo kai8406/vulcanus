@@ -18,17 +18,11 @@ import com.chinamcloud.auth.service.UserService;
 @RestController
 public class UserController {
 
-	@GetMapping("/api")
-	public String hello() {
-		return "hello auth,";
-	}
-
 	@Autowired
 	private UserService service;
 
 	@GetMapping("/user")
 	public Principal getUser(Principal principal) {
-		System.err.println(principal.getName());
 		return principal;
 	}
 
